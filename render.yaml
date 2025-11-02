@@ -2,8 +2,11 @@ services:
   - type: web
     name: laravel-voting-system
     env: php
-    buildCommand: composer install && php artisan key:generate && php artisan migrate --force
-    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan key:generate --force
+      php artisan migrate --force
+    startCommand: php -S 0.0.0.0:$PORT -t public
     envVars:
       - key: APP_ENV
         value: production
@@ -11,5 +14,7 @@ services:
         value: false
       - key: APP_KEY
         value: base64:3WjtFRQNSZMzRMXSvDg33K958guN24K/hPwPRF4NHaE=
+      - key: APP_URL
+        value: https://laravel-voting-system.onrender.com
     plan: free
-    autoDeploy: true
+
