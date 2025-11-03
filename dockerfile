@@ -14,8 +14,8 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 RUN cp .env.example .env || true
 RUN chmod -R 777 storage bootstrap/cache
 RUN php artisan key:generate
-RUN php artisan config:cache
-RUN php artisan route:cache
+# RUN php artisan config:cache || true
+# RUN php artisan route:cache || true
 
 RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
